@@ -1,69 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Restaurant Recommendation</title>
-    <link rel="stylesheet" href="../static/css/newlocation.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Indie+Flower&display=swap"
-          rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Indie+Flower&display=swap"
-          rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Indie+Flower&display=swap"
-          rel="stylesheet">
-    <script text="text/javascript" src="../static/script/scroll.js"></script>
-    <!-- <link rel="icon" href="icon.ico"> -->
-  <link rel="apple-touch-icon" sizes="180x180" href="../static/css/favicon_io/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="../static/css/favicon_io/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="../static/css/favicon_io/favicon-16x16.png">
-  <link rel="manifest" href="../static/css/favicon_io/site.webmanifest">
-</head>
-
-<body onload="botScroll()">
-<nav id="navbar">
-    <div id="logo">
-        <img src="../static/css/logo.png" alt="">
-    </div>
-    <ul>
-        <li class="item"><a href="/dashboard">Home</a></li>
-        <li class="item"><a href="/dashboard#service">Services</a></li>
-        <li class="item"><a href="#clientsection">About Us</a></li>
-        <li class="item"><a href="/dashboard#contact">Contact Us</a></li>
-    </ul>
-    <ul id="user">
-        <li class="item"><a href="/logout">
-            <div id="user">Logout {{ user.name }}</div>
-        </a></li>
-
-    </ul>
-</nav>
-
-<section id="home">
-    <h1 class="primary"> welcomee To Location Locator</h1>
-    <h1 class="primary1">Discover the best food & drinks </h1>
-
+{% extends 'base.html' %}
+{% block title %}Restaurant Recommendation{% endblock %}
+{% block content %}
+{% include 'navbar.html' %}
+<section id="home" class="home--valeria">
+    <h1 class="primary">Location</h1>
     <form id="locationForm" method="post" action="/city">
-        <div class="radio-box">
-            <label>
-                <input id="rad1" type="radio" name="formType" value="city" checked>
-                <p>City</p>
-            </label>
-            <label>
-                <input type="radio" name="formType" value="location">
-                <p>Location</p>
-            </label>
-        </div>
         <div class="input-box">
-            <input type="text" class="input-field" name="location" placeholder="Enter Location"
-                   list="locations" id="locationInput" style="display: none;">
+            <input type="text" class="input-field" name="location" placeholder="Enter Location" list="locations"
+                id="locationInput" style="display: none;">
             <datalist id="locations">
 
                 <option value="Banashankari"></option>
@@ -98,9 +42,8 @@
                 <option value="Sarjapur Road"></option>
 
             </datalist>
-
-            <input type="text" class="input-field" name="city" placeholder="Enter City"  list="cities"
-                   id="cityInput">
+            <input type="text" class="input-field" name="city" placeholder="Enter City" list="cities" id="cityInput">
+            <button type="submit" class="submit"><a href="#clientsection"></a>Search</button>
             <datalist id="cities">
                 <option value="Agra"></option>
                 <option value="Ahmedabad"></option>
@@ -204,56 +147,20 @@
             </datalist>
             <i class="bx bx-user"></i>
         </div>
-        <i class="bx bx-user"></i>
+        <div class="radio-box">
+            <label>
+                <input id="rad1" type="radio" name="formType" value="city" checked>
+                <p>City</p>
+            </label>
+            <label>
+                <input type="radio" name="formType" value="location">
+                <p>Local</p>
+            </label>
         </div>
-        <div class="input-box">
-            <button type="submit" class="submit"><a href="#clientsection"></a>Search</button>
-        </div>
-
     </form>
 </section>
-
-
 <section id="clientsection">
-    {% block content %}
+    {% block result %}
     {% endblock %}
 </section>
-
-<footer>
-    <div class="center">All right service</div>
-</footer>
-
-
-<script>
-    // Add event listener to radio buttons
-    document.querySelectorAll('input[name="formType"]').forEach(function (radio) {
-        radio.addEventListener('change', function () {
-            // Change the form action based on the selected radio button
-            var formAction = this.value === 'location' ? '/locationsearch' : '/city';
-            document.getElementById('locationForm').action = formAction;
-
-            // Toggle visibility of city and location inputs based on the selected radio button
-            if (this.value === 'city') {
-                document.getElementById('cityInput').style.display = 'block';
-                document.getElementById('cityInput').required = true;
-            } else {
-                document.getElementById('cityInput').style.display = 'none';
-                document.getElementById('cityInput').required = false;
-            }
-            if (this.value === 'location') {
-                document.getElementById('locationInput').style.display = 'block';
-                document.getElementById('locationInput').required = true;
-            } else {
-                document.getElementById('locationInput').style.display = 'none';
-                document.getElementById('locationInput').required = false;
-            }
-
-            // Print the selected radio button's value to the console
-            console.log('Selected radio button: ', this.value);
-        });``
-    });
-</script>
-
-</body>
-
-</html>
+{% endblock %}
